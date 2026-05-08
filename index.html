@@ -3,100 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechWorld | Professional Store</title>
+    <title>TechWorld | Professional Cloud Store</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/pricedown" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <style>
-        :root {
-            --primary: #ff6600;
-            --dark: #1a1a1a;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-        }
-
-        @keyframes reveal { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        * { box-sizing: border-box; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        :root { --primary: #ff6600; --dark: #1a1a1a; --bg: #f4f7f6; --white: #ffffff; }
+        * { box-sizing: border-box; transition: all 0.3s ease; }
         body { font-family: 'Cairo', sans-serif; margin: 0; background: var(--bg); color: var(--dark); overflow-x: hidden; }
 
-        /* HEADER */
+        /* HEADER & SEARCH */
         header { 
             background: var(--white); padding: 15px 8%; display: flex; align-items: center; justify-content: space-between;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 1000; gap: 20px;
         }
         .logo { font-family: 'Pricedown', sans-serif; font-size: 45px; color: var(--primary); text-decoration: none; text-shadow: 2px 2px 0px #000; flex-shrink: 0; }
         
-        .search-container { position: relative; flex-grow: 1; max-width: 600px; }
-        .search-container input { 
-            width: 100%; padding: 12px 20px 12px 45px; border-radius: 30px; border: 2px solid #eee;
-            font-family: 'Cairo'; font-size: 16px; outline: none;
-        }
-        .search-container input:focus { border-color: var(--primary); }
+        .search-container { position: relative; flex-grow: 1; max-width: 500px; }
+        .search-container input { width: 100%; padding: 12px 20px 12px 45px; border-radius: 30px; border: 2px solid #eee; font-size: 16px; outline: none; }
         .search-container i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #999; }
 
-        .cart-trigger { position: relative; cursor: pointer; font-size: 28px; flex-shrink: 0; }
+        .cart-trigger { position: relative; cursor: pointer; font-size: 28px; }
         .badge { position: absolute; top: -8px; right: -12px; background: var(--primary); color: white; border-radius: 50%; padding: 2px 8px; font-size: 12px; font-weight: 900; }
 
-        /* LAYOUT */
+        /* MAIN LAYOUT */
         .main-wrapper { display: grid; grid-template-columns: 280px 1fr; padding: 40px 8%; gap: 40px; }
 
-        /* SIDEBAR */
+        /* SIDEBAR CATEGORIE */
         .sidebar { background: var(--white); border-radius: 20px; padding: 25px; height: fit-content; position: sticky; top: 110px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .sidebar h3 { font-family: 'Orbitron', sans-serif; font-size: 13px; letter-spacing: 2px; color: #bbb; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         
         .cat-item { 
-            display: flex; align-items: center; gap: 12px; padding: 12px 18px; text-decoration: none; color: var(--dark); 
-            font-weight: 700; border-radius: 12px; margin-bottom: 8px; cursor: pointer;
+            display: flex; align-items: center; gap: 12px; padding: 12px 18px; font-weight: 700; border-radius: 12px; 
+            margin-bottom: 8px; cursor: pointer; color: var(--dark); text-decoration: none;
         }
         .cat-item i { width: 20px; text-align: center; font-size: 18px; color: var(--primary); }
         .cat-item:hover, .cat-item.active { background: var(--primary); color: white; transform: translateX(10px); }
         .cat-item:hover i, .cat-item.active i { color: white; }
 
-        /* GRID */
+        /* PRODUCT GRID */
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 30px; }
         .card { 
             background: var(--white); border-radius: 25px; padding: 25px; text-align: center; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.04); border: 1px solid transparent;
-            animation: reveal 0.5s ease backwards;
         }
-        .card:hover { transform: translateY(-12px); border-color: var(--primary); box-shadow: 0 20px 40px rgba(255, 102, 0, 0.15); }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
         .card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 15px; }
-        .card h4 { margin: 10px 0; font-size: 17px; font-weight: 800; height: 45px; overflow: hidden; }
-        .price { font-family: 'Orbitron', sans-serif; color: var(--primary); font-size: 22px; font-weight: 900; margin-bottom: 15px; display: block; }
-        
+        .price { font-family: 'Orbitron', sans-serif; color: var(--primary); font-size: 22px; font-weight: 900; display: block; margin: 10px 0; }
         .btn-add { background: var(--dark); color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; width: 100%; font-weight: 800; }
         .btn-add:hover { background: var(--primary); }
 
-        /* MODALE CARRELLO & PAGAMENTO */
-        #cart-modal { display: none; position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; backdrop-filter: blur(10px); }
-        .cart-box { background: white; width: 550px; padding: 40px; border-radius: 35px; max-height: 90vh; overflow-y: auto; position: relative; }
-        
-        .pay-services { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 25px; }
-        .service-opt { 
-            border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; text-align: center;
-            display: flex; flex-direction: column; gap: 8px; font-weight: 700; transition: 0.3s;
-        }
-        .service-opt i { font-size: 24px; color: var(--primary); }
-        .service-opt.selected { border-color: var(--primary); background: #fff5ed; }
-
-        .pay-fields { display: none; margin-top: 20px; background: #f9f9f9; padding: 20px; border-radius: 15px; animation: reveal 0.3s ease; }
-        .pay-fields input { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: 'Cairo'; }
-
-        /* ADMIN */
-        #admin-panel { display: none; position: fixed; inset: 0; background: #f0f2f5; padding: 40px; overflow-y: auto; z-index: 3000; }
-        .admin-header { background: #2c3e50; color: white; padding: 15px 40px; position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; }
+        /* GESTIONALE (ADMIN) */
+        #admin-panel { display: none; position: fixed; inset: 0; background: #f0f2f5; z-index: 3000; padding: 40px; overflow-y: auto; }
+        .admin-header { background: #2c3e50; color: white; padding: 15px 40px; position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; z-index: 3001; }
         .admin-table { width: 100%; border-collapse: collapse; margin-top: 60px; background: white; border-radius: 12px; overflow: hidden; }
-        .admin-table th, .admin-table td { padding: 12px; text-align: left; border-bottom: 1px solid #eee; }
+        .admin-table th, .admin-table td { padding: 12px; border-bottom: 1px solid #eee; text-align: left; }
         .admin-input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
 
-        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* CHECKOUT MODAL */
+        #cart-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .cart-box { background: white; width: 550px; padding: 40px; border-radius: 35px; max-height: 90vh; overflow-y: auto; }
+        .pay-services { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .service-opt { border: 2px solid #eee; padding: 15px; border-radius: 15px; cursor: pointer; text-align: center; font-weight: bold; }
+        .service-opt.selected { border-color: var(--primary); background: #fff5ed; color: var(--primary); }
+        .pay-fields { display: none; margin-top: 15px; background: #f9f9f9; padding: 15px; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -106,7 +78,7 @@
             <a href="#" class="logo">TECHWORLD</a>
             <div class="search-container">
                 <i class="fa fa-search"></i>
-                <input type="text" id="main-search" placeholder="Cerca nel catalogo..." oninput="searchProducts(this.value)">
+                <input type="text" id="main-search" placeholder="Cerca hardware..." oninput="searchProducts(this.value)">
             </div>
             <div class="cart-trigger" onclick="toggleCart()">
                 <i class="fa fa-shopping-cart"></i>
@@ -125,97 +97,107 @@
 
     <div id="admin-panel">
         <div class="admin-header">
-            <span style="font-family:Orbitron">GESTIONALE PRODOTTI</span>
+            <span style="font-family:Orbitron">DANEA CLOUD GESTIONALE</span>
             <div>
-                <button onclick="resetToDefault()" style="background:#e74c3c; color:white; border:none; padding:8px 15px; border-radius:5px; cursor:pointer; margin-right:10px">RESET DATABASE</button>
-                <button onclick="window.location.hash=''; location.reload()" style="background:var(--primary); color:white; border:none; padding:8px 25px; border-radius:5px; cursor:pointer">SALVA E TORNA AL SITO</button>
+                <button onclick="saveToCloud()" style="background:#27ae60; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:bold; margin-right:10px">SALVA NELLA CARTELLA DATA</button>
+                <button onclick="window.location.hash=''; location.reload()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:bold">ESCI</button>
             </div>
         </div>
         <div style="margin-top:80px">
-            <button onclick="addProduct()" style="background:#27ae60; color:white; border:none; padding:12px 25px; border-radius:10px; cursor:pointer; margin-bottom:20px; font-weight:bold">+ AGGIUNGI ARTICOLO</button>
+            <button onclick="addProduct()" style="background:var(--dark); color:white; border:none; padding:12px 25px; border-radius:10px; cursor:pointer; margin-bottom:20px; font-weight:bold">+ AGGIUNGI ARTICOLO</button>
             <table class="admin-table">
-                <thead><tr><th>Immagine</th><th>Nome</th><th>Prezzo</th><th>Categoria</th><th>Azioni</th></tr></thead>
+                <thead><tr><th>Immagine (URL)</th><th>Nome Prodotto</th><th>Prezzo (€)</th><th>Categoria</th><th>Azioni</th></tr></thead>
                 <tbody id="admin-body"></tbody>
             </table>
         </div>
     </div>
 
     <div id="cart-modal">
-        <div class="cart-box" id="checkout-form">
-            <h2 style="color:var(--primary); font-family:Orbitron; margin-top:0">CARRELLO</h2>
-            <div id="cart-list" style="margin:20px 0; max-height:180px; overflow-y:auto; border-bottom:1px solid #eee"></div>
-            <div style="text-align:right; font-size:24px; font-weight:900; margin:15px 0">TOTALE: <span id="cart-total" style="color:var(--primary)">0.00</span> €</div>
-
-            <h3 style="font-size:16px; margin-top:20px">SCEGLI METODO DI PAGAMENTO</h3>
+        <div class="cart-box">
+            <h2 style="color:var(--primary); font-family:Orbitron; margin-top:0">CHECKOUT</h2>
+            <div id="cart-list" style="margin:20px 0; border-bottom:1px solid #eee"></div>
+            <div style="text-align:right; font-size:24px; font-weight:900">TOTALE: <span id="cart-total" style="color:var(--primary)">0.00</span> €</div>
+            
+            <h3 style="font-size:16px; margin-top:20px">PAGAMENTO</h3>
             <div class="pay-services">
-                <div class="service-opt" onclick="selectPay('visa', this)"><i class="fa fa-credit-card"></i>CARTA</div>
-                <div class="service-opt" onclick="selectPay('paypal', this)"><i class="fab fa-paypal"></i>PAYPAL</div>
-                <div class="service-opt" onclick="selectPay('btc', this)"><i class="fab fa-bitcoin"></i>BITCOIN</div>
-                <div class="service-opt" onclick="selectPay('bank', this)"><i class="fa fa-university"></i>BONIFICO</div>
+                <div class="service-opt" onclick="selectPay('visa', this)"><i class="fa fa-credit-card"></i> CARTA</div>
+                <div class="service-opt" onclick="selectPay('paypal', this)"><i class="fab fa-paypal"></i> PAYPAL</div>
             </div>
+            <div id="pay-visa" class="pay-fields"><input type="text" placeholder="Numero Carta" style="width:100%; padding:10px;"></div>
+            <div id="pay-paypal" class="pay-fields"><input type="text" placeholder="Email PayPal" style="width:100%; padding:10px;"></div>
 
-            <div id="pay-visa" class="pay-fields">
-                <input type="text" placeholder="Nome Titolare">
-                <input type="text" placeholder="Numero Carta">
-                <div style="display:flex; gap:10px"><input type="text" placeholder="MM/AA"><input type="text" placeholder="CVV"></div>
-            </div>
-            <div id="pay-paypal" class="pay-fields"><input type="email" placeholder="Indirizzo Email PayPal"></div>
-            <div id="pay-btc" class="pay-fields"><p style="font-size:11px; word-break:break-all">Indirizzo Wallet: <b>bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</b></p></div>
-            <div id="pay-bank" class="pay-fields"><p style="font-size:11px">IBAN: <b>IT 99 L 01234 56789 000000123456</b></p></div>
-
-            <button class="btn-add" style="background:var(--primary); margin-top:25px; padding:18px; font-size:18px" onclick="processOrder()">CONFERMA PAGAMENTO</button>
+            <button class="btn-add" style="background:var(--primary); margin-top:20px; padding:15px;" onclick="alert('Ordine inviato!')">CONFERMA E PAGA</button>
             <p onclick="toggleCart()" style="text-align:center; color:#999; cursor:pointer; margin-top:15px">Annulla</p>
-        </div>
-
-        <div id="loading-screen" class="cart-box" style="display:none; text-align:center">
-            <div class="spinner"></div>
-            <h2 id="loading-msg">VERIFICA TRANSAZIONE...</h2>
-            <p>Attendere il completamento della procedura industriale.</p>
         </div>
     </div>
 
     <script>
-        const defaultData = [
-            { name: "NVIDIA RTX 4090", price: 2199.00, cat: "GPU", img: "https://www.nvidia.com/content/dam/en-zz/Solutions/geforce/ada/rtx-4090/geforce-rtx-4090-product-photo-02.png" },
-            { name: "Intel Core i9-14900K", price: 620.00, cat: "CPU", img: "https://www.intel.com/content/dam/www/central-libraries/us/en/images/2023-09/processor-image-14th-gen-core-i9.png" },
-            { name: "DJI Avata 2 Drone", price: 1150.00, cat: "Droni", img: "https://m.media-amazon.com/images/I/61fI0aUv0yL._AC_SL1500_.jpg" },
-            { name: "Bambu Lab X1-Carbon", price: 1450.00, cat: "3D", img: "https://cdn.shopify.com/s/files/1/0584/7236/6216/products/x1-carbon_600x.png" },
-            { name: "Samsung 990 PRO 2TB", price: 185.00, cat: "Storage", img: "https://semiconductor.samsung.com/resources/product-lineup/SSD_990_PRO_L_3.png" },
-            { name: "Razer DeathAdder V3", price: 160.00, cat: "Periferiche", img: "https://assets2.razerzone.com/images/pnx.assets/946399652ce6a87796f6e520021611a5/razer-deathadder-v3-pro-black-500x500.png" }
-        ];
-
-        let products = JSON.parse(localStorage.getItem('tw_full_db')) || defaultData;
-        let cart = [];
-        let selectedMethod = '';
-
-        const iconMap = {
-            'GPU': 'fa-microchip',
-            'CPU': 'fa-microchip', // Icona CPU
-            'DRONI': 'fa-helicopter', // Icona Droni
-            '3D': 'fa-cube',
-            'STORAGE': 'fa-hdd',
-            'PERIFERICHE': 'fa-mouse',
-            'MEMORIA': 'fa-memory',
-            'TUTTI': 'fa-border-all'
+        // --- CONFIGURAZIONE GITHUB ---
+        const GH_CONFIG = {
+            token: "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", // Inserisci qui il tuo Token
+            owner: "H4Z3-byte",      // Inserisci qui il tuo Username
+            repo: "techworld",           // Inserisci qui il nome del Repository
+            path: "data/inventory.json"    // Cartella Data + file
         };
 
-        function init() {
-            if(window.location.hash === '#admin') {
-                document.getElementById('shop-view').style.display = 'none';
-                document.getElementById('admin-panel').style.display = 'block';
-                renderAdmin();
-            } else {
-                renderShop(products);
-                renderCategories();
-            }
+        let products = [];
+        let cart = [];
+        let currentSha = ""; // Necessario per GitHub per sovrascrivere il file
+
+        const iconMap = { 'GPU': 'fa-microchip', 'CPU': 'fa-memory', 'DRONI': 'fa-helicopter', '3D': 'fa-cube', 'STORAGE': 'fa-hdd', 'PERIFERICHE': 'fa-mouse', 'TUTTI': 'fa-border-all' };
+
+        // 1. CARICAMENTO DATI REAL-TIME DAL REPO
+        async function loadData() {
+            try {
+                const url = `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.path}`;
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `token ${GH_CONFIG.token}`, 'Accept': 'application/vnd.github.v3+json' }
+                });
+                const data = await response.json();
+                currentSha = data.sha;
+                
+                // Decodifica Base64 del contenuto del file
+                const content = JSON.parse(atob(data.content));
+                
+                // Aggiorna solo se i dati sono cambiati
+                if (JSON.stringify(content) !== JSON.stringify(products)) {
+                    products = content;
+                    renderShop(products);
+                    renderCategories();
+                    if(window.location.hash === '#admin') renderAdmin();
+                    console.log("Cloud Sincronizzato.");
+                }
+            } catch (e) { console.error("Database non trovato o Token errato."); }
         }
 
+        // 2. SALVATAGGIO NELLA CARTELLA /DATA/
+        async function saveToCloud() {
+            const contentBase64 = btoa(JSON.stringify(products, null, 2));
+            const url = `https://api.github.com/repos/${GH_CONFIG.owner}/${GH_CONFIG.repo}/contents/${GH_CONFIG.path}`;
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `token ${GH_CONFIG.token}`, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: "Update da Danea Gestionale",
+                        content: contentBase64,
+                        sha: currentSha
+                    })
+                });
+                const res = await response.json();
+                currentSha = res.content.sha;
+                alert("Dati salvati con successo nella cartella Data!");
+            } catch (e) { alert("Errore nel salvataggio. Verifica i permessi del Token."); }
+        }
+
+        // LOGICA INTERFACCIA
         function renderShop(data) {
             const grid = document.getElementById('product-grid');
-            grid.innerHTML = data.map((p, i) => `
-                <div class="card" style="animation-delay: ${i * 0.05}s">
-                    <img src="${p.img}">
-                    <h4>${p.name}</h4>
+            grid.innerHTML = data.map(p => `
+                <div class="card">
+                    <img src="${p.img || 'https://via.placeholder.com/150'}">
+                    <h4 style="height:40px; overflow:hidden">${p.name}</h4>
                     <span class="price">${p.price.toFixed(2)}€</span>
                     <button class="btn-add" onclick="addToCart('${p.name}', ${p.price})">AGGIUNGI</button>
                 </div>
@@ -225,16 +207,12 @@
         function renderCategories() {
             const menu = document.getElementById('category-menu');
             const cats = ['Tutti', ...new Set(products.map(p => p.cat))];
-            menu.innerHTML = cats.map(c => `
-                <div class="cat-item" onclick="filterCat('${c}', this)">
-                    <i class="fa ${iconMap[c.toUpperCase()] || 'fa-tag'}"></i> ${c}
-                </div>
-            `).join('');
+            menu.innerHTML = cats.map(c => `<div class="cat-item" onclick="filterCat('${c}', this)"><i class="fa ${iconMap[c.toUpperCase()] || 'fa-tag'}"></i> ${c}</div>`).join('');
         }
 
-        function searchProducts(query) {
-            const filtered = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
-            renderShop(filtered);
+        function searchProducts(q) {
+            const f = products.filter(p => p.name.toLowerCase().includes(q.toLowerCase()));
+            renderShop(f);
         }
 
         function filterCat(cat, el) {
@@ -243,66 +221,26 @@
             renderShop(cat === 'Tutti' ? products : products.filter(p => p.cat === cat));
         }
 
-        function selectPay(method, el) {
-            selectedMethod = method;
-            document.querySelectorAll('.service-opt').forEach(opt => opt.classList.remove('selected'));
-            el.classList.add('selected');
-            document.querySelectorAll('.pay-fields').forEach(f => f.style.display = 'none');
-            document.getElementById('pay-' + method).style.display = 'block';
-        }
-
-        function addToCart(name, price) {
-            cart.push({name, price});
-            document.getElementById('cart-count').innerText = cart.length;
-        }
+        function addToCart(n, p) { cart.push({n,p}); document.getElementById('cart-count').innerText = cart.length; }
 
         function toggleCart() {
-            const modal = document.getElementById('cart-modal');
-            const list = document.getElementById('cart-list');
-            list.innerHTML = cart.map(i => `<div style="display:flex; justify-content:space-between; margin-bottom:10px"><span>${i.name}</span><b>${i.price.toFixed(2)}€</b></div>`).join('');
-            document.getElementById('cart-total').innerText = cart.reduce((a,b) => a + b.price, 0).toFixed(2);
-            modal.style.display = modal.style.display === 'flex' ? 'none' : 'flex';
+            const m = document.getElementById('cart-modal');
+            const l = document.getElementById('cart-list');
+            l.innerHTML = cart.map(i => `<div style="display:flex;justify-content:space-between;margin:5px 0"><span>${i.n}</span><b>${i.p.toFixed(2)}€</b></div>`).join('');
+            document.getElementById('cart-total').innerText = cart.reduce((a,b) => a+b.p, 0).toFixed(2);
+            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
         }
 
-        function processOrder() {
-            if(!selectedMethod) return alert("Seleziona un metodo di pagamento!");
-            if(cart.length === 0) return alert("Il carrello è vuoto!");
-
-            document.getElementById('checkout-form').style.display = 'none';
-            document.getElementById('loading-screen').style.display = 'block';
-
-            setTimeout(() => { document.getElementById('loading-msg').innerText = "AUTORIZZAZIONE FONDI..."; }, 1500);
-            setTimeout(() => {
-                alert("ORDINE COMPLETATO!\n\nEmail di conferma inviata.");
-                cart = [];
-                location.reload();
-            }, 3500);
+        function selectPay(m, el) {
+            document.querySelectorAll('.service-opt').forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            document.querySelectorAll('.pay-fields').forEach(f => f.style.display = 'none');
+            document.getElementById('pay-'+m).style.display = 'block';
         }
 
+        // AMMINISTRAZIONE
         function renderAdmin() {
-            const body = document.getElementById('admin-body');
-            body.innerHTML = products.map((p, i) => `
+            const b = document.getElementById('admin-body');
+            b.innerHTML = products.map((p, i) => `
                 <tr>
-                    <td><input class="admin-input" value="${p.img}" onchange="updateDB(${i}, 'img', this.value)"></td>
-                    <td><input class="admin-input" value="${p.name}" onchange="updateDB(${i}, 'name', this.value)"></td>
-                    <td><input class="admin-input" type="number" value="${p.price}" onchange="updateDB(${i}, 'price', this.value)"></td>
-                    <td><input class="admin-input" value="${p.cat}" onchange="updateDB(${i}, 'cat', this.value)"></td>
-                    <td><button onclick="deleteProd(${i})" style="color:red; border:none; background:none; cursor:pointer"><i class="fa fa-trash"></i></button></td>
-                </tr>
-            `).join('');
-        }
-
-        function updateDB(i, key, val) {
-            products[i][key] = key === 'price' ? parseFloat(val) : val;
-            localStorage.setItem('tw_full_db', JSON.stringify(products));
-        }
-
-        function addProduct() { products.unshift({ name: "Nuovo", price: 0, cat: "Hardware", img: "" }); renderAdmin(); }
-        function deleteProd(i) { products.splice(i, 1); localStorage.setItem('tw_full_db', JSON.stringify(products)); renderAdmin(); }
-        function resetToDefault() { if(confirm("Ripristinare il catalogo originale?")) { products = [...defaultData]; localStorage.setItem('tw_full_db', JSON.stringify(products)); renderAdmin(); } }
-
-        window.addEventListener('hashchange', init);
-        init();
-    </script>
-</body>
-</html>
+                    <td><input class="admin-input" value="${p.img}" onchange="
